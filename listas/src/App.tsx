@@ -1,7 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 function App() {
+  const [input, setInput] = useState("")
+  const [tasks, setTasks] = useState<string[]>([]) //Informa que é um array de string string[]
+  const [editTask, setEditTask] = useState({ //Criado para validar se o input está sendo alterado ou incluido
+    enable: false,
+    task: ''
+  })
+  const [teste, setTest] = useState(false)
+
+  useEffect(() => {
+    console.log("carregado")
+  }, [teste]) //Quando coloco uma variavel aqui ele sofra alteração ele chama novamente o useEfect, pode colocar mais de uma colocando ,
+
 function handleRegister(){
   if(!input){
     alert("Preencha o nome da tarefa!")
@@ -16,12 +28,6 @@ function handleRegister(){
   setTasks(tarefas => [...tarefas, input])
   setInput("")
 }
-  const [input, setInput] = useState("")
-  const [tasks, setTasks] = useState<string[]>([]) //Informa que é um array de string string[]
-  const [editTask, setEditTask] = useState({ //Criado para validar se o input está sendo alterado ou incluido
-    enable: false,
-    task: ''
-  })
 
   function handleSaveEdit(){ //Salvar edição 
     const findIndexTask = tasks.findIndex(task => task === editTask.task) //busca o index do campo clicado para edição
@@ -55,6 +61,7 @@ function handleRegister(){
 
   return (
       <div>
+      <button onClick={ () => setTest(true)}> Teste </button>
         <h1>Lista de Tarefas</h1>
 
         <input 
