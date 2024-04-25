@@ -1,4 +1,5 @@
-#Curso React
+# Curso React
 
 Comandos mais usados...
-npm create vite@latest **nome**
+
+`npm create vite@latest **nome**`
