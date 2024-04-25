@@ -2,4 +2,6 @@
 
 Comandos mais usados...
 
-`npm create vite@latest **nome**`
+```sh
+npm create vite@latest nome
+```
