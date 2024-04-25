@@ -48,15 +48,14 @@ function handleRegister(){
     })
 
     setInput("") //apaga o texto do imput
-    localStorage.setItem("@cursoreact", JSON.stringify([allTasks]))
-
+    localStorage.setItem("@cursoreact", JSON.stringify(allTasks))
 
   }
 
   function handleDelete(item: string){
     const removeTask = tasks.filter( task => task !== item) //Se o item for diferente do que você clicou ele salva na lista
     setTasks(removeTask)
-    localStorage.setItem("@cursoreact", JSON.stringify([removeTask]))
+    localStorage.setItem("@cursoreact", JSON.stringify(removeTask))
     
   }
 
