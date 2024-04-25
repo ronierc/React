@@ -11,8 +11,12 @@ function App() {
   const [teste, setTest] = useState(false)
 
   useEffect(() => {
-    console.log("carregado")
-  }, [teste]) //Quando coloco uma variavel aqui ele sofra alteração ele chama novamente o useEfect, pode colocar mais de uma colocando ,
+    const tarefasSalvas = localStorage.getItem("@cursoreact")
+
+    if(tarefasSalvas){
+      setTasks(JSON.parse(tarefasSalvas))
+    }
+  }, []) 
 
 function handleRegister(){
   if(!input){
@@ -27,6 +31,8 @@ function handleRegister(){
 
   setTasks(tarefas => [...tarefas, input])
   setInput("")
+
+  localStorage.setItem("@cursoreact", JSON.stringify([...tasks, input]))
 }
 
   function handleSaveEdit(){ //Salvar edição 
@@ -42,6 +48,7 @@ function handleRegister(){
     })
 
     setInput("") //apaga o texto do imput
+    localStorage.setItem("@cursoreact", JSON.stringify([allTasks]))
 
 
   }
@@ -49,6 +56,8 @@ function handleRegister(){
   function handleDelete(item: string){
     const removeTask = tasks.filter( task => task !== item) //Se o item for diferente do que você clicou ele salva na lista
     setTasks(removeTask)
+    localStorage.setItem("@cursoreact", JSON.stringify([removeTask]))
+    
   }
 
   function handleEdit(item: string){
@@ -61,7 +70,6 @@ function handleRegister(){
 
   return (
       <div>
-      <button onClick={ () => setTest(true)}> Teste </button>
         <h1>Lista de Tarefas</h1>
 
         <input 
