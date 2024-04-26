@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
   }, [tasks]) 
 
 
-function handleRegister(){
+const handleRegister = useCallback(() => { //so atualiza se sofrer alteração no mencionado
   if(!input){
     alert("Preencha o nome da tarefa!");
     return;
@@ -46,8 +46,7 @@ function handleRegister(){
   setTasks(tarefas => [...tarefas, input])
   setInput("")
 
-  //localStorage.setItem("@cursoreact", JSON.stringify([...tasks, input]))
-}
+}, [input, tasks])
 
   function handleSaveEdit(){ //Salvar edição 
     const findIndexTask = tasks.findIndex(task => task === editTask.task) //busca o index do campo clicado para edição
@@ -62,14 +61,12 @@ function handleRegister(){
     })
 
     setInput("") //apaga o texto do imput
-    //localStorage.setItem("@cursoreact", JSON.stringify(allTasks))
 
   }
 
   function handleDelete(item: string){
     const removeTask = tasks.filter( task => task !== item) //Se o item for diferente do que você clicou ele salva na lista
     setTasks(removeTask)
-    //localStorage.setItem("@cursoreact", JSON.stringify(removeTask))
     
   }
 
