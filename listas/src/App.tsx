@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 
 function App() {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const firstRender = useRef(true)
+
   const [input, setInput] = useState("")
   const [tasks, setTasks] = useState<string[]>([]) //Informa que é um array de string string[]
   const [editTask, setEditTask] = useState({ //Criado para validar se o input está sendo alterado ou incluido
@@ -11,28 +14,39 @@ function App() {
   const [teste, setTest] = useState(false)
 
   useEffect(() => {
-    const tarefasSalvas = localStorage.getItem("@cursoreact")
+    const tarefasSalvas = localStorage.getItem("@cursoreact");
 
     if(tarefasSalvas){
-      setTasks(JSON.parse(tarefasSalvas))
+      setTasks(JSON.parse(tarefasSalvas));
     }
   }, []) 
 
+  useEffect(() => { //Esse useEffect salva no localStorage toda vez que o tasks sofre alteração. Assim não preciso colocar pra salvar em cada alteração
+    if(firstRender.current){ //useRef para validar se é a primeira vez que rendeniza. e não subescrever o localStorage
+      firstRender.current = false;
+      return;
+    }
+    localStorage.setItem("@cursoreact", JSON.stringify(tasks))
+    console.log("efect")
+
+  }, [tasks]) 
+
+
 function handleRegister(){
   if(!input){
-    alert("Preencha o nome da tarefa!")
-    return
+    alert("Preencha o nome da tarefa!");
+    return;
   }
 
   if(editTask.enable){
-    handleSaveEdit()
-    return
+    handleSaveEdit();
+    return;
   }
 
   setTasks(tarefas => [...tarefas, input])
   setInput("")
 
-  localStorage.setItem("@cursoreact", JSON.stringify([...tasks, input]))
+  //localStorage.setItem("@cursoreact", JSON.stringify([...tasks, input]))
 }
 
   function handleSaveEdit(){ //Salvar edição 
@@ -48,18 +62,21 @@ function handleRegister(){
     })
 
     setInput("") //apaga o texto do imput
-    localStorage.setItem("@cursoreact", JSON.stringify(allTasks))
+    //localStorage.setItem("@cursoreact", JSON.stringify(allTasks))
 
   }
 
   function handleDelete(item: string){
     const removeTask = tasks.filter( task => task !== item) //Se o item for diferente do que você clicou ele salva na lista
     setTasks(removeTask)
-    localStorage.setItem("@cursoreact", JSON.stringify(removeTask))
+    //localStorage.setItem("@cursoreact", JSON.stringify(removeTask))
     
   }
 
   function handleEdit(item: string){
+
+    inputRef.current?.focus();// usa o useRef para deixar o focus no input ao clicar em edita 
+
     setInput(item)
     setEditTask({
       enable: true,
@@ -75,6 +92,7 @@ function handleRegister(){
           placeholder="Digite uma tarefa..." 
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          ref={inputRef}
         />
         <button onClick={handleRegister}> 
           {editTask.enable ? "Atualizar Tarefa" : "Adicionar Tarefa"}
