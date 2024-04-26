@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 
 
 function App() {
@@ -84,6 +84,10 @@ function handleRegister(){
     })
   }
 
+  const totalTarefas = useMemo(() => { //useMemo evita reindenizações desnecessárias. Ele atualiza somente se alterar a tasks
+    return tasks.length
+  }, [tasks])
+
   return (
       <div>
         <h1>Lista de Tarefas</h1>
@@ -99,6 +103,10 @@ function handleRegister(){
         </button>
         
         <hr />
+
+        <strong>Você tem {totalTarefas} tarefas</strong>
+
+        <br /><br />
 
         {tasks.map((item,index) => (
           <section key={index}>
