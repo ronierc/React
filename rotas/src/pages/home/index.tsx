@@ -5,11 +5,6 @@ export function Home(){
         <div>
             <h1>Bem vindo a página Home!</h1>
             <span>Minha primeira página com navegação</span>
-            <br />
-
-            <Link to="/sobre">Sobre</Link>
-            <Link to="/produto">Produto</Link>
-            <Link to="/contato">Contato</Link>
         </div>
     )
 }

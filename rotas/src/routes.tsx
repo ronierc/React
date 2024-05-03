@@ -6,22 +6,29 @@ import{ Contato } from './pages/contato'
 import{ Produto } from './pages/produto'
 import{ NotFound } from './pages/notfound'
 
+import { Layout } from './components/layout'
+
 const router = createBrowserRouter([
     {
-        path: "/", //Quando estiver na raiz vai carregar a abaixo
-        element: <Home/>
-    },{
-        path: "/sobre",
-        element: <Sobre/>
-    },{
-        path: "/contato",
-        element: <Contato/>
-    },{
-        path: "/produto/:id",
-        element: <Produto/>
-    },{
-        path: "*",//notfound - tem sempre que ser a ultima
-        element: <NotFound/>
+        element: <Layout/>,
+        children: [
+            {
+                path: "/", //Quando estiver na raiz vai carregar a abaixo
+                element: <Home/>
+            },{
+                path: "/sobre",
+                element: <Sobre/>
+            },{
+                path: "/contato",
+                element: <Contato/>
+            },{
+                path: "/produto/:id",
+                element: <Produto/>
+            },{
+                path: "*",//notfound - tem sempre que ser a ultima
+                element: <NotFound/>
+            }
+        ]
     }
 ])
 
