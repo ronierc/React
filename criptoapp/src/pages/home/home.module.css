@@ -1,0 +1,9 @@
+.container{
+    max-width: 1080px;
+    height: 120px;
+    /* background-color: var(--bg-color2); */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
