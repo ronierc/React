@@ -1,0 +1,33 @@
+.container{
+    padding: 0 14px;
+}
+
+.container h1{
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+section{
+    max-width: 500px;
+    background-color: var(--bg-color4);
+    margin: 24px auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section img{
+    width: 60px;
+    transition: all 1s;
+    &:hover{
+        transform: rotate(360deg);
+    }
+}
+
+.profit{
+    color: var(--green); 
+}
+.loss{
+    color: var(--red);
+}

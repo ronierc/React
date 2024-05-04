@@ -8,6 +8,11 @@
   --color: #c9cacc;
   --color2: rgba(255, 255, 255, 0.87);
 
+  
+  --green: #12f98a;
+  --red: #f91257;
+  --blue: #30beff;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

@@ -1,9 +1,116 @@
 .container{
-    max-width: 1080px;
-    height: 120px;
-    /* background-color: var(--bg-color2); */
+    margin: 24px;
+}
 
+.form{
+    width: 100%;
     display: flex;
+}
+
+
+.form input{
+    width: 100%;
+    height: 44px;
+    padding: 0 8px;
+    outline: none;
+    background: var(--bg-color3);
+    color: var(--color);
+    border-radius: 8px 0 0 8px;
+    border: 0;
+}
+.form button{
+    background: var(--bg-color4);
+    padding: 0 8px;
+    color: var(--color);
+    border-radius: 0 8px 8px 0;
+}
+
+table{
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    width: 100%;
+    table-layout: fixed;
+}
+table caption{
+    font-size: 16px;
+    margin: 0.5em .75em;
+}
+
+table tbody tr{
+    background: var(--bg-color3);
+}
+table tbody td{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+td:first-child, th.first-child{
+    border-radius: 8px 0 0 8px;
+}
+td:last-child, th.last-child{
+    border-radius: 0 8px 8px 0;
+}
+
+table th, table td{
+    padding: 14px;
+    text-align: center;
+}
+
+.tdProfit{
+    color: var(--green);
+}
+.tdLoss{
+    color: var(--red);
+}
+
+.buttonMore{
+    background: linear-gradient(#30c8ff, #3087ff);
+    padding: 10px;
+    border-radius: 8px 0;
+}
+
+.name{
+    display: flex;
+    gap: 8px;
     align-items: center;
-    justify-content: center;
+}
+
+.name img{
+    width: 20px;
+    height: 20px;
+    transition: all 1s;
+    &:hover{
+        transform: scale(1.5);
+        z-index: 99;
+    }
+}
+
+/* RESPONSIVIDADE TABELA */
+@media screen and (max-width: 600px) {
+    table thead{
+        display: none;
+    }
+    table tbody tr{
+        border-bottom: 1px solid var(--bg-color4);
+        display: block;
+        margin-bottom: 14px;
+    }
+    table tbody td{
+        border-bottom: 1px solid var(--bg-color2);
+        display: block;
+        text-align: right;
+        font-size: 14px;
+    }
+    table tbody td::before{
+        content: attr(data-label);
+        float: left;
+        text-transform: uppercase;
+    }
+    td:first-child, th.first-child, td:last-child, th.last-child{
+        border-radius: 0;
+    }
+
+    .name img{
+        margin-left: 14px;
+    }
 }
