@@ -5,17 +5,17 @@ import { Input } from '../../components/input'
 
 import { FiTrash } from 'react-icons/fi';
 import { db } from '../../services/firebaseConnection';
-import { 
+import {
   addDoc, //Adiciona documento dentro de uma coleção (Gera Id aleatorio) AUTOID
-  collection, 
-  onSnapshot, 
-  query, 
-  orderBy, 
-  doc, 
-  deleteDoc 
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  doc,
+  deleteDoc
 } from 'firebase/firestore';
 
-interface linkProps{
+interface linkProps {
   id: string,
   name: string,
   url: string,
@@ -61,7 +61,7 @@ export function Admin() {
   function handleRegister(e: FormEvent) {
     e.preventDefault();
 
-    if(nameInput === "" && urlInput === ""){
+    if (nameInput === "" && urlInput === "") {
       alert("Preencha as informações!!!");
       return;
     }
@@ -73,13 +73,18 @@ export function Admin() {
       color: textColorInput,
       created: new Date()
     })
-    .then(() => {
-      setNameInput("");
-      setUrlInput("");
-      console.log("CADASTRADO COM SUCESSO");
-    }).catch((error) => {
-      console.error("ERRO AO CADASTRAR NO BANCO" + error);
-    })
+      .then(() => {
+        setNameInput("");
+        setUrlInput("");
+        console.log("CADASTRADO COM SUCESSO");
+      }).catch((error) => {
+        console.error("ERRO AO CADASTRAR NO BANCO" + error);
+      })
+  }
+
+  async function handleDeleteLink(id: string){
+    const docRef = doc(db, "links", id) //Encontra qual o item dentro da coleção pelo id
+    await deleteDoc(docRef)//função que deleta o doc encontrado acima. = await para esperar a requisição
   }
 
   return (
@@ -143,19 +148,23 @@ export function Admin() {
         Meus Links
       </h2>
 
-      <article 
-        className="flex items-center justify-between w-11/12 max-w-xl rounded py-3 px-2 select-none"
-        style={{ backgroundColor: "#ccc", color: "#369" }}  
-      >
-        <p>Canal do Youtube</p>
-        <div>
-          <button
-            className="border border-dashed p-1 rounded bg-slate-700"
+      {links.map((link) => (
+        <article
+          key={link.id}
+          className="flex items-center justify-between w-11/12 max-w-xl rounded py-3 px-2 select-none"
+          style={{ backgroundColor: link.bg, color: link.color }}
+        >
+          <p>{link.name}</p>
+          <div>
+            <button
+              className="border border-dashed p-1 rounded bg-slate-700"
+              onClick={ () => handleDeleteLink(link.id) }
             >
-            <FiTrash size={18} color='#ccc'/>
-          </button>
-        </div>
-      </article>
+              <FiTrash size={18} color='#ccc' />
+            </button>
+          </div>
+        </article>
+      ))}
     </div>
   )
 }
