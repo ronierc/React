@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 
 import { Header } from '../../components/header'
 import { Input } from '../../components/input'
@@ -15,11 +15,48 @@ import {
   deleteDoc 
 } from 'firebase/firestore';
 
+interface linkProps{
+  id: string,
+  name: string,
+  url: string,
+  bg: string,
+  color: string
+}
+
 export function Admin() {
   const [nameInput, setNameInput] = useState("");
   const [urlInput, setUrlInput] = useState("");
   const [textColorInput, setTextColorInput] = useState("#f1f1f1");
   const [backgroundColorInput, setBackgroundColorInput] = useState("#121212");
+
+  const [links, setLinks] = useState<linkProps[]>([])
+
+  useEffect(() => {
+    const linkRef = collection(db, "links"); //encontra a collection no bd
+    const queryRef = query(linkRef, orderBy("created", "asc")); //cria a consulta da collection encontrada assim e ordena
+
+    const unsub = onSnapshot(queryRef, (snapshot) => { //onSnapshot fica monitorando o banco a qualquer alteração
+      let lista = [] as linkProps[];
+
+      snapshot.forEach((doc) => {
+        lista.push({
+          id: doc.id,
+          name: doc.data().name,
+          url: doc.data().url,
+          bg: doc.data().bg,
+          color: doc.data().color
+        })
+      })
+
+      setLinks(lista); //Pega as informações retornadas pela query e inclui em um array
+
+    })
+
+    return () => {//função anonima para quando sair do onSnapshot, para não ficar carregando a memoria
+      unsub(); //Função que desmonta o inSnapshot
+    }
+
+  }, [])
 
   function handleRegister(e: FormEvent) {
     e.preventDefault();
