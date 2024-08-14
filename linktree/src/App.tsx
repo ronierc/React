@@ -4,6 +4,7 @@ import { Home } from './pages/home'
 import { Admin } from './pages/admin'
 import { Networks } from './pages/networks'
 import { Login } from './pages/login'
+import { ErrorPage } from './pages/error'
 
 import { Private } from './routes/Private'
 
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     element: <Private><Networks/></Private>
   },{
     path: '*',
-    element: <Private><Admin/></Private>
+    element: <ErrorPage/>
   }
 ])
 
