@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { Social } from '../../components/social'
-import { Header } from '../../components/header'
 import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa'
 import { db } from '../../services/firebaseConnection'
 import { getDocs, collection, orderBy, query, doc, getDoc } from 'firebase/firestore'
