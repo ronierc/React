@@ -1,20 +1,7 @@
-React5 Novo projeto
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
---Cria projeto
-npm create vite calculadora
-
---Instala dependências node
-npm install
-
---Roda projeto
-npm run dev
-
-
---Import Icons
-npm install react-icons
-
-
---index.css
 :root {
   --bg-color: #21222c;
   --bg-color2: #282a36;
@@ -31,12 +18,4 @@ npm install react-icons
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
