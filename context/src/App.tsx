@@ -1,5 +1,6 @@
-import { Alunos } from './components/Alunos'
 import UserProvider from './contexts/user'
+import { Alunos } from './components/Alunos'
+import { Footer } from './components/Footer'
 
 
 function App() {
@@ -11,6 +12,8 @@ function App() {
         <hr />
 
         <Alunos />
+
+        <Footer />
 
       </div>
     </UserProvider> 
