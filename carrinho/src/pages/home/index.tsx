@@ -1,9 +1,76 @@
+import { useEffect, useState, useContext } from "react"
+import { BsCartPlus } from "react-icons/bs"
+import toast from "react-hot-toast"
+
+import { api } from "../../services/api"
+import { CartContext } from "../../contexts/CartContext";
+import { Link } from "react-router-dom";
+
+export interface ProductProps{
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    cover: string;
+}
+
 export function Home(){
+    const { addItemCart } = useContext(CartContext)
+    const [products, setProducts] = useState<ProductProps[]>([])
+
+    useEffect(() => {
+        async function getProducts(){
+            const response = await api.get("/products")
+            setProducts(response.data)
+        }
+
+        getProducts()
+    }, [])
+
+    function handleAddCartItem(product: ProductProps){
+        toast.success("Produto adicionado no carrinho.", {
+            style:{
+                borderRadius: 10,
+                backgroundColor: "#121212",
+                color: "#fff"
+            }
+        })
+        addItemCart(product)
+    }
+
     return(
         <div>
-            <h1 className="text-3xl font-bold underline">
-                Home
-            </h1>
+            <main className="w-full max-w-7xl px-4 mx-auto ">
+                <h1 className="font-bold text-2x1 mb4 mt-10 text-center">Produtos em alta</h1>
+
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+                    {products.map( ( product ) => (
+                        <section key={product.id} className="w-full">
+                            <Link to={`product/${product.id}`}>
+                                <img 
+                                    className="w-full rounded-lg max-h-70 mb-2"
+                                    src={product.cover}
+                                    alt="Imagem do Produdo" 
+                                /> 
+                                
+                                <p className="font-medium mt-1 mb-2">{product.title}</p>
+                            </Link>
+
+                            <div className="flex gap-3 items-center">
+                                <strong className="text-zinc-300">
+                                    {product.price.toLocaleString("pt-BR", {
+                                        style: "currency",
+                                        currency: "BRL"
+                                    })}
+                                </strong>
+                                <button className="bg-zinc-500 p-1 rounded " onClick={ () => handleAddCartItem(product) }>
+                                    <BsCartPlus size={20} color="#fff" />
+                                </button>
+                            </div>
+                        </section>
+                    ))}
+                </div>
+            </main>
         </div>
     )
 }
